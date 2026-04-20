@@ -1,6 +1,6 @@
-# 🏏 CricBuddy — AI Cricket Coaching App
+# 🏏 CricBuddy — AI Cricket Coaching App (Mobile)
 
-> An AI-powered cricket coaching application that captures batsman footage, analyses technique using pose detection, and delivers professional graphical feedback.
+> A React Native (Expo) cricket coaching application for iOS and Android. Records batting shots via the phone camera, analyses technique with AI pose detection, and delivers graphical feedback — all on-device.
 
 ---
 
@@ -10,25 +10,32 @@
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running on Device](#running-on-device)
+  - [Running on Simulator](#running-on-simulator)
 - [Using the Application](#using-the-application)
   - [Step 1 — Capture Video](#step-1--capture-video)
   - [Step 2 — Analyse Shot](#step-2--analyse-shot)
   - [Step 3 — View Charts](#step-3--view-charts)
   - [Step 4 — Read Coaching Feedback](#step-4--read-coaching-feedback)
-- [Application Snapshots](#application-snapshots)
+- [App Screens](#app-screens)
 - [Metrics Explained](#metrics-explained)
+- [Permissions](#permissions)
 - [Project Structure](#project-structure)
+- [Platform Compatibility](#platform-compatibility)
 
 ---
 
 ## Overview
 
-CricBuddy is built for cricket coaches and players who want data-driven insights into batting technique. Point a webcam at the batsman, record a shot, and in seconds the app:
+CricBuddy Mobile brings AI cricket coaching to your pocket. A coach or player points their phone at the batsman from the side, records a shot, and the app:
 
-1. Detects 17 body keypoints using **TensorFlow.js MoveNet**
-2. Overlays a colour-coded skeleton on the video frame
-3. Plots 6 interactive charts (radar, doughnut, time-series line/bar)
-4. Generates detailed coaching feedback graded by severity
+1. Captures video using the device's native camera via **expo-camera**
+2. Extracts frames and detects 17 body keypoints using **TensorFlow.js MoveNet**
+3. Draws a colour-coded SVG skeleton overlay directly on the video
+4. Renders 6 interactive charts: SVG radar, pie, line, and bar charts
+5. Generates severity-graded coaching feedback with an overall technique score (0–100)
 
 ---
 
@@ -36,14 +43,15 @@ CricBuddy is built for cricket coaches and players who want data-driven insights
 
 | Feature | Description |
 |---|---|
-| 📹 Live Recording | Record directly from webcam with pause/resume |
-| 📂 Video Upload | Upload existing MP4 / WebM / MOV footage |
-| 🦴 Skeleton Overlay | Real-time 17-point pose skeleton drawn on canvas |
+| 📷 Live Camera Recording | Record batting shots using front or rear phone camera |
+| 📂 Gallery Upload | Select existing batting videos from Photos / Gallery |
+| 🦴 SVG Skeleton Overlay | 17-point pose skeleton rendered over video using react-native-svg |
 | 📐 Biomechanical Metrics | Knee flexion, elbow angle, hip rotation, weight distribution, head position |
-| 🎯 Shot Detection | Auto-detects drive, pull, cut, sweep or defence |
-| 📊 6 Analytics Charts | Radar, doughnut and 4 time-series charts |
+| 🎯 Auto Shot Detection | Identifies drive, pull, cut, sweep or defence automatically |
+| 📊 6 Analytics Charts | Radar (SVG), Pie, 3× Line, Bar — all rendered natively |
 | 💬 Coaching Feedback | Severity-graded cards: Excellent / Good / Needs Work / Critical |
-| 🏅 Score Ring | Animated overall technique score (0–100) |
+| 🏅 SVG Score Ring | Animated circular score display (0–100) |
+| 📱 Cross-Platform | Runs on both iOS (iPhone/iPad) and Android |
 
 ---
 
@@ -51,13 +59,18 @@ CricBuddy is built for cricket coaches and players who want data-driven insights
 
 | Layer | Technology |
 |---|---|
-| Framework | React 19 + TypeScript |
-| Build Tool | Vite 8 |
-| Styling | Tailwind CSS v4 |
-| Pose Detection | TensorFlow.js MoveNet (CDN) |
-| Charts | Chart.js + react-chartjs-2 |
-| Icons | Lucide React |
-| Video API | MediaRecorder + Canvas API |
+| Framework | React Native 0.74 + Expo ~51 |
+| Language | TypeScript |
+| Navigation | React Navigation v6 — Bottom Tabs |
+| Camera | expo-camera |
+| Video Playback | expo-av |
+| Gallery Picker | expo-image-picker |
+| Frame Extraction | expo-video-thumbnails |
+| Pose Detection | TensorFlow.js MoveNet + @tensorflow/tfjs-react-native |
+| Skeleton Overlay | react-native-svg (SVG `<Line>` + `<Circle>`) |
+| Charts | react-native-chart-kit + custom SVG Radar |
+| Score Ring | react-native-svg (custom circular progress) |
+| Safe Area | react-native-safe-area-context |
 
 ---
 
@@ -65,9 +78,14 @@ CricBuddy is built for cricket coaches and players who want data-driven insights
 
 ### Prerequisites
 
-- Node.js 18+
-- npm 9+
-- A modern browser with WebGL support (Chrome / Edge recommended)
+- **Node.js** 18 or higher
+- **npm** 9 or higher
+- **Expo CLI** — install globally: `npm install -g expo-cli`
+- **Expo Go** app on your phone ([iOS App Store](https://apps.apple.com/app/expo-go/id982107779) / [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent))
+
+For building native binaries (optional):
+- **Xcode** 14+ (macOS only, for iOS simulator / App Store builds)
+- **Android Studio** (for Android emulator / Play Store builds)
 
 ### Installation
 
@@ -76,23 +94,59 @@ CricBuddy is built for cricket coaches and players who want data-driven insights
 git clone https://github.com/iamvikasknair/cricbuddy.git
 cd cricbuddy
 
-# Install dependencies
-npm install
+# Switch to the mobile branch
+git checkout mobileApp
 
-# Start the development server
-npm run dev
+# Install dependencies
+npm install --legacy-peer-deps
 ```
 
-Open `http://localhost:5173` in your browser.
+### Running on Device
 
-### Production Build
+The fastest way to run the app is on a real phone using **Expo Go**:
 
 ```bash
-npm run build
-npm run preview
+# Start the Expo development server
+npx expo start
 ```
 
-> **Note:** The app loads TensorFlow.js from CDN on first use. Ensure internet access is available when the app loads the MoveNet model (~3 MB).
+A QR code will appear in the terminal. Scan it with:
+- **iPhone / iPad** — open the Camera app and scan, or use Expo Go
+- **Android** — open Expo Go and tap "Scan QR code"
+
+The app will bundle and launch on your device over your local Wi-Fi network.
+
+### Running on Simulator
+
+**iOS Simulator (macOS only):**
+
+```bash
+npx expo start --ios
+```
+
+**Android Emulator:**
+
+```bash
+npx expo start --android
+```
+
+### Production Builds (EAS)
+
+To build a standalone `.ipa` or `.apk` for distribution:
+
+```bash
+# Install EAS CLI
+npm install -g eas-cli
+
+# Configure the project (first time only)
+eas build:configure
+
+# Build for iOS
+eas build --platform ios
+
+# Build for Android
+eas build --platform android
+```
 
 ---
 
@@ -100,76 +154,98 @@ npm run preview
 
 ### Step 1 — Capture Video
 
-Navigate to the **Capture** tab (active by default).
+Open the app. The **Capture** tab is active by default.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  🏏 CricBuddy          AI Cricket Coach             │
-├──────────┬──────────┬──────────┬────────────────────┤
-│ ● Capture│  Analyse │  Charts  │  Feedback          │
-├─────────────────────────────────────────────────────┤
-│                                                      │
-│         Start Batting Analysis                       │
-│    Record live or upload existing footage            │
-│                                                      │
-│  ┌─────────────────────┐  ┌────────────────────┐    │
-│  │  📷  Live Camera    │  │  📂  Upload Video  │    │
-│  │  Record from webcam │  │  MP4, WebM, MOV    │    │
-│  └─────────────────────┘  └────────────────────┘    │
-│                                                      │
-└─────────────────────────────────────────────────────┘
+╔══════════════════════════════════════╗
+║  ┌────────────────────────────────┐  ║
+║  │  🏏 CricBuddy                  │  ║
+║  │  AI Cricket Coach              │  ║
+║  └────────────────────────────────┘  ║
+║                                      ║
+║     Start Batting Analysis           ║
+║     Record live or upload footage    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │  📷  Live Camera             │    ║
+║  │  Record a batting shot with  │    ║
+║  │  your phone camera       ›   │    ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │  📂  Upload Video            │    ║
+║  │  Select from your gallery›   │    ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │  📐 Recording Tips           │    ║
+║  │  • Film from the side        │    ║
+║  │  • Full body in frame        │    ║
+║  │  • Good lighting             │    ║
+║  ╰──────────────────────────────╯    ║
+╠═══════════╦══════╦════════╦══════════╣
+║  📹       ║  🎯  ║   📊   ║   💬    ║
+║ Capture   ║Analys║ Charts ║Feedback  ║
+╚═══════════╩══════╩════════╩══════════╝
 ```
 
 **Option A — Live Camera:**
-1. Click **Live Camera**
-2. Allow browser camera permission when prompted
-3. The webcam feed appears in the preview window
-4. Click **Start Recording** (red button) to begin capturing
-5. Use **Pause** to temporarily stop mid-shot if needed
-6. Click **Stop & Analyse** when the shot is complete — the app automatically moves to the Analyse tab
+1. Tap **Live Camera** — the app requests camera permission on first use
+2. Point the phone at the batsman from the **side** (leg or off stump angle)
+3. Ensure the **full body** is visible in the frame
+4. Tap the large **red record button** (●) to start recording
+5. Tap the **red square (■)** to stop — the app navigates to Analyse automatically
 
-**Option B — Upload Video:**
-1. Click **Upload Video**
-2. Select a `.mp4`, `.webm`, or `.mov` file from your device
-3. The app loads the file and navigates to the Analyse tab automatically
+**Option B — Gallery Upload:**
+1. Tap **Upload Video**
+2. The Photos / Gallery picker opens — select a batting video
+3. The app navigates to the Analyse tab automatically
+
+> **Tip:** For best skeleton detection accuracy, film from 3–5 metres away with the batsman sideways to the camera.
 
 ---
 
 ### Step 2 — Analyse Shot
 
-The **Analyse** tab shows the video with the AI skeleton overlay.
+The **Analyse** tab shows the video player with the SVG skeleton overlay.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  🏏 CricBuddy                     Score: 78/100 ●   │
-├──────────┬──────────┬──────────┬────────────────────┤
-│  Capture │ ● Analyse│  Charts  │  Feedback          │
-├─────────────────────────────────────────────────────┤
-│  Video Analysis                   View Feedback  >  │
-│ ┌───────────────────────────────────────────────┐   │
-│ │                                  Knee  142°   │   │
-│ │     [Video frame with skeleton overlay]       │   │
-│ │                                  Elbow  95°   │   │
-│ │  ●●●—●—●  (skeleton joints shown in colour)  │   │
-│ │                                  Weight 58%fwd│   │
-│ └───────────────────────────────────────────────┘   │
-│  ▶ Play    ⏮ Restart                  🤖 Analyse    │
-└─────────────────────────────────────────────────────┘
+╔══════════════════════════════════════╗
+║  Analyse Shot            Feedback ›  ║
+╠══════════════════════════════════════╣
+║ ┌────────────────────────────────┐   ║
+║ │                    Knee  142°  │   ║
+║ │      ◉  (nose)     Elbow  95° │   ║
+║ │     /|\ (shoulders/arms)       │   ║
+║ │      |  (torso)    Wt    58%  │   ║
+║ │     / \ (hips)                 │   ║
+║ │    /   \ (knees/ankles)        │   ║
+║ └────────────────────────────────┘   ║
+║                                      ║
+║  ┌──────────────────────────────┐    ║
+║  │  🤖  Analyse Shot            │    ║
+║  └──────────────────────────────┘    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │ ✅ Analysis Complete          │   ║
+║  │  Score  │  Shot   │ Frames   │   ║
+║  │  78/100 │  Drive  │   24     │   ║
+║  │                              │   ║
+║  │  View Coaching Feedback ›    │   ║
+║  ╰──────────────────────────────╯    ║
+╠═══════════╦══════╦════════╦══════════╣
+║  📹       ║  🎯● ║   📊   ║   💬    ║
+║ Capture   ║Analys║ Charts ║Feedback  ║
+╚═══════════╩══════╩════════╩══════════╝
 ```
 
 **Steps:**
-1. The video loads automatically — click **Play** to preview it
-2. Click **Analyse Shot** (green button, top-right of controls)
-3. A progress bar shows the AI processing each frame (0–100%)
-4. Once complete, the skeleton overlay appears on the video:
-   - **Green lines** — body connections (bones)
-   - **Gold dots** — head keypoints
-   - **Orange dots** — wrist/hand keypoints
-   - **Blue dots** — hip keypoints
-5. A live HUD (top-right of video) shows real-time metrics as you scrub through
-6. Click **View Feedback →** or switch to the **Charts** or **Feedback** tabs
+1. The video loads automatically — use the native controls to preview it
+2. Tap **Analyse Shot** (green button)
+3. A progress bar (0–100%) shows frame extraction and pose analysis in progress
+4. Once complete, the **SVG skeleton** appears over the video:
 
-**Skeleton key:**
+**Skeleton colour key:**
 
 | Colour | Body Part |
 |--------|-----------|
@@ -180,277 +256,250 @@ The **Analyse** tab shows the video with the AI skeleton overlay.
 | Blue `●` | Hips |
 | Cyan `●` | Knees |
 | Purple `●` | Ankles |
+| Green lines | Bone connections |
+
+5. A **live HUD** (top-right of video) shows Knee angle, Elbow angle, and Forward Weight %
+6. Tap **View Coaching Feedback ›** or switch tabs
 
 ---
 
 ### Step 3 — View Charts
 
-The **Charts** tab displays 6 graphical analyses of the batting session.
+The **Charts** tab renders 6 native charts covering every dimension of technique.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  🏏 CricBuddy                     Score: 78/100 ●   │
-├──────────┬──────────┬──────────┬────────────────────┤
-│  Capture │  Analyse │ ● Charts │  Feedback          │
-├─────────────────────────────────────────────────────┤
-│  Performance Charts                                  │
-│                                                      │
-│  ┌──────────────────┐  ┌──────────────────┐         │
-│  │  Technique Radar │  │  Head Position   │         │
-│  │   ╱‾╲            │  │   ◕ Donut chart  │         │
-│  │  /   \           │  │  Ideal / Hi / Lo │         │
-│  └──────────────────┘  └──────────────────┘         │
-│                                                      │
-│  ┌──────────────────┐  ┌──────────────────┐         │
-│  │  Knee Flexion °  │  │  Weight Dist. %  │         │
-│  │  ~~~line chart~~ │  │  ~~~line chart~~ │         │
-│  └──────────────────┘  └──────────────────┘         │
-│                                                      │
-│  ┌──────────────────┐  ┌──────────────────┐         │
-│  │  Elbow Angle °   │  │  Hip Rotation °  │         │
-│  │  ~~~line chart~~ │  │  ▐▌▌▐▌ bar chart │         │
-│  └──────────────────┘  └──────────────────┘         │
-└─────────────────────────────────────────────────────┘
+╔══════════════════════════════════════╗
+║  Performance Charts                  ║
+╠══════════════════════════════════════╣
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │   ● Technique Radar          │    ║
+║  │                              │    ║
+║  │        Stance                │    ║
+║  │       /      \               │    ║
+║  │  Follow    Backlift          │    ║
+║  │      \      /                │    ║
+║  │       Balance                │    ║
+║  │  ── Ideal  ── Your score     │    ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │   ● Head Position            │    ║
+║  │    ╭──── Ideal 78% ────╮     │    ║
+║  │   ╱  Too High  Too Low  ╲    │    ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │   ● Knee Flexion (°)         │    ║
+║  │  180°│                       │    ║
+║  │  155°│ - - - ideal max       │    ║
+║  │  130°│ - - - ideal min       │    ║
+║  │      │   ╭──╮  ╭──╮          │   ║
+║  │   80°│───╯  ╰──╯  ╰──        │   ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  [ scroll for more charts ↓ ]        ║
+╠═══════════╦══════╦════════╦══════════╣
+║  📹       ║  🎯  ║   📊●  ║   💬    ║
+║ Capture   ║Analys║ Charts ║Feedback  ║
+╚═══════════╩══════╩════════╩══════════╝
 ```
 
-| Chart | What it shows |
-|---|---|
-| **Technique Radar** | 7-axis spider chart scoring all technique dimensions vs ideal |
-| **Head Position** | Doughnut showing % of frames where head was Ideal / Too High / Too Low |
-| **Knee Flexion** | Line chart over time with ideal 130–155° band shaded |
-| **Weight Distribution** | Front-foot weight % over time (50% = balanced) |
-| **Elbow Angle** | Backlift height curve across the shot duration |
-| **Hip Rotation** | Bar chart — green bars = good rotation (15–40°), gold = outside range |
+Scroll down to see all 6 charts:
 
-Hover any data point for exact values in the tooltip.
+| Chart | Type | What it shows |
+|---|---|---|
+| **Technique Radar** | SVG polygon | 6-axis spider chart vs ideal profile |
+| **Head Position** | Pie chart | % frames Ideal / Too High / Too Low |
+| **Knee Flexion** | Line chart | Angle over shot duration (ideal 130–155°) |
+| **Weight Distribution** | Line chart | Front-foot % over time (ideal 40–65%) |
+| **Elbow / Backlift** | Line chart | Backlift height curve (ideal 80–130°) |
+| **Hip Rotation** | Bar chart | Rotation per frame (ideal 15–40°) |
+
+Tap any bar or line data point to see the exact value in a tooltip.
 
 ---
 
 ### Step 4 — Read Coaching Feedback
 
-The **Feedback** tab provides your overall score and actionable coaching notes.
+The **Feedback** tab gives the overall score and detailed coaching notes.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  🏏 CricBuddy                     Score: 78/100 ●   │
-├──────────┬──────────┬──────────┬────────────────────┤
-│  Capture │  Analyse │  Charts  │ ● Feedback         │
-├──────────────────────────────────────────────────────┤
-│  Coaching Feedback              View Charts  >       │
-│                                                      │
-│  ┌─────────────────────────────────────────────┐    │
-│  │   ╭────╮   Overall Technique Score          │    │
-│  │   │ 78 │   78 / 100                         │    │
-│  │   ╰────╯   Shot: Front Foot Drive           │    │
-│  │            "Focus on leading with elbow…"   │    │
-│  │   Duration: 2.4s   Frames: 24   Accuracy 92%│    │
-│  └─────────────────────────────────────────────┘    │
-│                                                      │
-│  [ 2 Strengths ] [ 1 Good ] [ 1 Needs Work ] [ 0 ]  │
-│                                                      │
-│  ★ Excellent  Textbook Backlift                      │
-│    Elbow angle of 95° indicates a high, correct…    │
-│                                                      │
-│  ✓ Good       Good Weight Balance                    │
-│    Weight at 58% forward is well balanced…          │
-│                                                      │
-│  ⚠ Needs Work Limited Hip Rotation                   │
-│    Your hips are not rotating enough through…       │
-└─────────────────────────────────────────────────────┘
+╔══════════════════════════════════════╗
+║  Coaching Feedback       Charts ›    ║
+╠══════════════════════════════════════╣
+║  ╭──────────────────────────────╮    ║
+║  │   ╭──────╮  Overall Score    │    ║
+║  │   │  78  │  78 / 100         │    ║
+║  │   ╰──────╯                   │    ║
+║  │  Shot: Front Foot Drive      │    ║
+║  │  "Lead with the elbow and    │    ║
+║  │   play close to the body."   │    ║
+║  │                              │    ║
+║  │  ┌───────┬────────┬────────┐ │    ║
+║  │  │ 2.4s  │  24    │  92%   │ │    ║
+║  │  │ Dur.  │ Frames │  Acc.  │ │    ║
+║  │  └───────┴────────┴────────┘ │    ║
+║  ╰──────────────────────────────╯    ║
+║                                      ║
+║  [2 Strengths][1 Good][1 Improve][0] ║
+║                                      ║
+║  ╭──────────────────────────────╮    ║
+║  │ ★  Textbook Backlift         │    ║
+║  │    [ Excellent ]             │    ║
+║  │    Elbow 95° — high correct  │    ║
+║  │    backlift toward mid-on.   │    ║
+║  ╰──────────────────────────────╯    ║
+║  ╭──────────────────────────────╮    ║
+║  │ ⚠  Limited Hip Rotation      │    ║
+║  │    [ Needs Work ]            │    ║
+║  │    Drive hips toward bowler  │    ║
+║  │    to generate more power.   │    ║
+║  ╰──────────────────────────────╯    ║
+╠═══════════╦══════╦════════╦══════════╣
+║  📹       ║  🎯  ║   📊   ║   💬●   ║
+║ Capture   ║Analys║ Charts ║Feedback  ║
+╚═══════════╩══════╩════════╩══════════╝
 ```
 
-**Severity levels:**
+**Severity levels (sorted most critical first):**
 
-| Badge | Meaning |
-|---|---|
-| ★ **Excellent** (green) | World-class technique in this area |
-| ✓ **Good** (blue) | Solid, above-average execution |
-| ⚠ **Needs Work** (yellow) | Correctable flaw that limits performance |
-| ✗ **Critical** (red) | Fundamental error requiring immediate attention |
-
-Feedback cards are sorted from most critical to most excellent so coaches can prioritise corrections.
+| Badge | Colour | Meaning |
+|---|---|---|
+| ★ **Excellent** | Green | World-class technique in this area |
+| ✓ **Good** | Blue | Solid, above-average execution |
+| ⚠ **Needs Work** | Yellow | Correctable flaw that limits performance |
+| ✗ **Critical** | Red | Fundamental error requiring immediate correction |
 
 ---
 
-## Application Snapshots
+## App Screens
 
-### Dashboard — Capture Tab
-```
-╔═════════════════════════════════════════════════════════╗
-║  🏏 CricBuddy  ·  AI Cricket Coach                      ║
-╠══════════╦══════════╦══════════╦═════════════════════════╣
-║ ◉ Capture║  Analyse ║  Charts  ║  Feedback               ║
-╠═════════════════════════════════════════════════════════╣
-║                                                          ║
-║              Start Batting Analysis                      ║
-║         Record live or upload existing footage           ║
-║                                                          ║
-║    ╭──────────────────────╮  ╭──────────────────────╮    ║
-║    │  📷  Live Camera     │  │  📂  Upload Video    │    ║
-║    │                      │  │                      │    ║
-║    │  Record from webcam  │  │  MP4, WebM, MOV      │    ║
-║    ╰──────────────────────╯  ╰──────────────────────╯    ║
-║                                                          ║
-╚═════════════════════════════════════════════════════════╝
-```
+### Screen Flow
 
-### Video Analyser with Skeleton Overlay
 ```
-╔═════════════════════════════════════════════════════════╗
-║  Analyse                                 View Feedback › ║
-╠═════════════════════════════════════════════════════════╣
-║ ╭─────────────────────────────────────┬─────────────╮   ║
-║ │                                     │  Knee  142° │   ║
-║ │         ◉ (nose)                    │  Elbow  95° │   ║
-║ │        / \                          │  Wght  58%  │   ║
-║ │   (L◉)───(◉R) shoulders            ╰─────────────╯   ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) elbows                                  ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) wrists                                  ║
-║ │       |   |                                           ║
-║ │   (L◉)───(◉R) hips                                    ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) knees                                   ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) ankles                                  ║
-║ ╰─────────────────────────────────────────────────────╯ ║
-║  ▶ Play   ⏮ Restart                      🤖 Analyse    ║
-╚═════════════════════════════════════════════════════════╝
+  ┌────────────┐     records/uploads      ┌────────────┐
+  │  Capture   │ ────────────────────────▶│  Analyse   │
+  │  Screen    │                          │  Screen    │
+  └────────────┘                          └─────┬──────┘
+                                                │ analysis complete
+                                                ▼
+                                         ┌────────────┐
+                                    ┌────│  Charts    │
+                                    │    │  Screen    │
+                                    │    └────────────┘
+                                    │
+                                    │    ┌────────────┐
+                                    └───▶│  Feedback  │
+                                         │  Screen    │
+                                         └────────────┘
 ```
 
-### Performance Charts
-```
-╔═════════════════════════════════════════════════════════╗
-║  Performance Charts                                      ║
-╠═══════════════════════════╦═════════════════════════════╣
-║  Technique Radar          ║  Head Position              ║
-║                           ║                             ║
-║       Stance 100          ║       ╭────────╮            ║
-║      /        \           ║      ╱  Ideal  ╲            ║
-║  Timing  ──── Backlift    ║     │  78%  ●   │           ║
-║      \        /           ║      ╲    22%  ╱            ║
-║       Balance             ║       ╰────────╯            ║
-╠═══════════════════════════╬═════════════════════════════╣
-║  Knee Flexion (°)         ║  Weight Distribution (%)    ║
-║  180°│                    ║  100%│                       ║
-║  155°│- - - ideal max     ║   65%│ ─ ─ ─ ─ ─ ─ ─ ─     ║
-║      │  ╭──╮  ╭──╮       ║   50%│- - - balanced         ║
-║  130°│─ ╯  ╰──╯  ╰──     ║      │  ╭──╮  ╭──╮          ║
-║   80°│                    ║    0%│──╯  ╰──╯  ╰──        ║
-║      └─────────────────   ║      └──────────────────    ║
-╠═══════════════════════════╬═════════════════════════════╣
-║  Elbow Angle (°)          ║  Hip Rotation (°)           ║
-║  180°│                    ║   50°│                       ║
-║      │ ╭─╮  ╭─╮           ║   40°│ ▐▌  ▐▌  ▐▌  ▐▌      ║
-║   90°│─╯ ╰──╯ ╰──        ║   15°│  ▌    ▌    ▌          ║
-║    0°│                    ║    0°│───────────────────    ║
-║      └─────────────────   ║      └──────────────────    ║
-╚═════════════════════════════════════════════════════════╝
-```
+### Navigation
 
-### Coaching Feedback Panel
-```
-╔═════════════════════════════════════════════════════════╗
-║  Coaching Feedback                       View Charts  › ║
-╠═════════════════════════════════════════════════════════╣
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ╭──────╮  Overall Technique Score              │   ║
-║  │  │  78  │  78 / 100                             │   ║
-║  │  ╰──────╯  Shot: Front Foot Drive               │   ║
-║  │            "Focus on leading with elbow…"       │   ║
-║  │                                                  │   ║
-║  │  Duration: 2.4s  │  Frames: 24  │  Accuracy 92% │   ║
-║  │  Avg Knee: 142°  │  Avg Fwd Wt: 58%             │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║                                                          ║
-║  [ 2 Strengths ]  [ 1 Good ]  [ 1 Needs Work ]  [ 0 ]  ║
-║                                                          ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ★  Textbook Backlift            [ Excellent ]  │   ║
-║  │     Elbow angle 95° — high correct backlift     │   ║
-║  │     towards mid-on / second slip.               │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ✓  Great Head Position              [ Good ]   │   ║
-║  │     Head stays over the ball, eyes level —      │   ║
-║  │     a hallmark of elite batsmen.                │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ⚠  Limited Hip Rotation        [ Needs Work ]  │   ║
-║  │     Hips not rotating enough through the shot.  │   ║
-║  │     Drive hips toward bowler to generate power. │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-╚═════════════════════════════════════════════════════════╝
-```
+The app uses a **bottom tab navigator** with 4 tabs. Tabs are always visible. The Charts and Feedback tabs show an empty state until an analysis has been run.
 
 ---
 
 ## Metrics Explained
 
-| Metric | Ideal Range | How It's Measured |
+| Metric | Ideal Range | How It's Calculated |
 |---|---|---|
-| **Knee Flexion** | 130° – 155° | Angle at knee joint (hip → knee → ankle) |
-| **Elbow Angle** | 80° – 130° | Dominant arm angle (shoulder → elbow → wrist) |
-| **Hip Rotation** | 15° – 40° | Difference in shoulder/hip axis angles |
-| **Weight Distribution** | 40% – 65% forward | Hip centre-of-mass relative to ankle span |
+| **Knee Flexion** | 130° – 155° | Angle at knee joint: hip → knee → ankle |
+| **Elbow Angle** | 80° – 130° | Dominant arm: shoulder → elbow → wrist |
+| **Hip Rotation** | 15° – 40° | Difference between shoulder and hip axis angles |
+| **Weight Distribution** | 40% – 65% forward | Hip midpoint relative to ankle span |
 | **Head Position** | Ideal | Nose Y-position relative to hip height |
-| **Overall Score** | 0 – 100 | Weighted average of all severity grades |
+| **Overall Score** | 0 – 100 | Weighted average across all severity grades |
 
-### Shot Auto-Detection Logic
+### Shot Auto-Detection
 
-| Shot | Primary Cues |
+| Shot Type | Primary Cues |
 |---|---|
-| **Front Foot Drive** | Deep knee bend (<130°), weight forward (>55%) |
-| **Pull Shot** | High bat angle (>60°), weight on back foot (<45%) |
-| **Cut Shot** | Moderate bat angle (>45°), back-foot weight |
-| **Sweep** | Very deep knee bend (<120°) |
-| **Defensive** | Straight knees (>155°), minimal movement |
+| **Front Foot Drive** | Knee <130°, weight forward >55% |
+| **Pull Shot** | Bat angle >60°, weight back <45% |
+| **Cut Shot** | Bat angle >45°, back-foot weight |
+| **Sweep** | Knee <120° (very deep bend) |
+| **Defensive** | Knees >155° (minimal flex) |
+
+---
+
+## Permissions
+
+The app requests the following permissions at runtime:
+
+| Permission | Platform | When Requested | Why |
+|---|---|---|---|
+| Camera | iOS + Android | Tapping "Live Camera" | To record batting video |
+| Microphone | iOS + Android | Camera permission dialog | Required for video recording (audio track) |
+| Photo Library Read | iOS | Tapping "Upload Video" | To select existing videos from gallery |
+| External Storage Read | Android | Tapping "Upload Video" | To access video files on Android |
+
+All permissions use the system dialog — the app never accesses the camera or gallery without the user explicitly initiating the action.
 
 ---
 
 ## Project Structure
 
 ```
-cricbuddy/
-├── index.html                        # CDN TF.js script tags
-├── vite.config.ts                    # Vite + Tailwind config
-├── src/
-│   ├── main.tsx                      # React entry point
-│   ├── App.tsx                       # Root component
-│   ├── index.css                     # Global styles + Tailwind
-│   ├── types/
-│   │   └── index.ts                  # Shared TypeScript types
-│   ├── utils/
-│   │   └── poseUtils.ts              # Angle calc, frame analysis, feedback engine
-│   ├── hooks/
-│   │   └── usePoseDetection.ts       # TF.js MoveNet hook + skeleton draw
-│   └── components/
-│       ├── VideoCapture/
-│       │   └── VideoCapture.tsx      # Webcam recording + file upload
-│       ├── PoseAnalysis/
-│       │   └── VideoAnalyser.tsx     # Canvas overlay + frame-by-frame analysis
-│       ├── Charts/
-│       │   └── AnalyticsCharts.tsx   # All 6 Chart.js chart components
-│       ├── Feedback/
-│       │   └── FeedbackPanel.tsx     # Score ring + feedback cards
-│       └── Dashboard/
-│           └── Dashboard.tsx         # 4-tab app shell + routing
+cricbuddy/                          (mobileApp branch)
+├── App.tsx                         # Root: GestureHandler + Navigation + SafeArea
+├── app.json                        # Expo config (permissions, icons, bundle IDs)
+├── babel.config.js                 # Expo + Reanimated Babel preset
+├── tsconfig.json                   # TypeScript config for React Native
+├── package.json                    # Expo + RN dependencies
+│
+└── src/
+    ├── theme.ts                    # Colours, shared StyleSheet, chartConfig
+    │
+    ├── types/
+    │   └── index.ts                # Shared TypeScript interfaces
+    │
+    ├── utils/
+    │   ├── poseUtils.ts            # Angle calc, frame analysis, feedback engine, shot detection
+    │   └── simulation.ts           # Realistic batting pose generator (demo / CI)
+    │
+    ├── hooks/
+    │   └── usePoseDetection.ts     # TF.js MoveNet init + tensor analysis hook
+    │
+    ├── navigation/
+    │   └── TabNavigator.tsx        # Bottom tab navigator (4 tabs)
+    │
+    ├── screens/
+    │   ├── CaptureScreen.tsx       # Camera recording + gallery upload
+    │   ├── AnalyseScreen.tsx       # Video player + SVG skeleton + frame analysis
+    │   ├── ChartsScreen.tsx        # 6 charts (SVG radar, pie, line ×3, bar)
+    │   └── FeedbackScreen.tsx      # Score ring + session stats + feedback cards
+    │
+    └── components/
+        ├── SkeletonOverlay.tsx     # react-native-svg 17-keypoint skeleton
+        ├── ScoreRing.tsx           # SVG circular progress score ring
+        └── FeedbackCard.tsx        # Severity-badged coaching feedback card
 ```
 
 ---
 
-## Browser Requirements
+## Platform Compatibility
 
-| Browser | Support |
+| Platform | Version | Status |
+|---|---|---|
+| iOS (iPhone) | 13.0+ | ✅ Full support |
+| iOS (iPad) | 13.0+ | ✅ Supported (portrait) |
+| Android | API 21+ (5.0) | ✅ Full support |
+| Expo Go | SDK 51 | ✅ Run instantly — no build needed |
+| iOS Simulator | Xcode 14+ | ⚠ Camera unavailable in simulator |
+| Android Emulator | API 26+ | ⚠ Camera limited in emulator |
+
+> For the best experience with live camera recording and AI analysis, test on a **real physical device**.
+
+---
+
+## Branches
+
+| Branch | Description |
 |---|---|
-| Chrome 90+ | ✅ Full support |
-| Edge 90+ | ✅ Full support |
-| Firefox 88+ | ✅ Supported |
-| Safari 15+ | ⚠ Camera access requires HTTPS |
-| Mobile Chrome | ✅ Use rear camera for best results |
-
-> For best pose detection accuracy, ensure the batsman is fully visible in frame, filmed from the side (leg-stump or off-stump camera angle), with good lighting.
+| `claude/cricket-video-analysis-MF7fZ` | Web app (Vite + React + Tailwind CSS) |
+| `mobileApp` | This branch — React Native (Expo) for iOS + Android |
 
 ---
 
