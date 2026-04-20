@@ -17,7 +17,7 @@ export interface FrameAnalysis {
   kneeFlexion: number | null;
   hipRotation: number | null;
   headPosition: 'ideal' | 'too-high' | 'too-low' | null;
-  weightDistribution: number | null; // 0-100, 0=back foot, 100=front foot
+  weightDistribution: number | null;
   elbowAngle: number | null;
 }
 
@@ -49,11 +49,3 @@ export type FeedbackCategory =
   | 'follow-through'
   | 'balance'
   | 'timing';
-
-export interface MetricSummary {
-  label: string;
-  value: number;
-  unit: string;
-  ideal: [number, number]; // [min, max]
-  description: string;
-}

@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "CricBuddy",
+    "slug": "cricbuddy",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0f1e"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cricbuddy.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "CricBuddy needs camera access to record your batting shots for analysis.",
+        "NSMicrophoneUsageDescription": "CricBuddy needs microphone access when recording video.",
+        "NSPhotoLibraryUsageDescription": "CricBuddy needs access to your photo library to upload batting videos."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a0f1e"
+      },
+      "package": "com.cricbuddy.app",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow CricBuddy to access your camera to record batting shots."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow CricBuddy to access your photos to upload batting videos."
+        }
+      ]
+    ]
+  }
+}
