@@ -156,38 +156,7 @@ eas build --platform android
 
 Open the app. The **Capture** tab is active by default.
 
-```
-╔══════════════════════════════════════╗
-║  ┌────────────────────────────────┐  ║
-║  │  🏏 CricBuddy                  │  ║
-║  │  AI Cricket Coach              │  ║
-║  └────────────────────────────────┘  ║
-║                                      ║
-║     Start Batting Analysis           ║
-║     Record live or upload footage    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │  📷  Live Camera             │    ║
-║  │  Record a batting shot with  │    ║
-║  │  your phone camera       ›   │    ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │  📂  Upload Video            │    ║
-║  │  Select from your gallery›   │    ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │  📐 Recording Tips           │    ║
-║  │  • Film from the side        │    ║
-║  │  • Full body in frame        │    ║
-║  │  • Good lighting             │    ║
-║  ╰──────────────────────────────╯    ║
-╠═══════════╦══════╦════════╦══════════╣
-║  📹       ║  🎯  ║   📊   ║   💬    ║
-║ Capture   ║Analys║ Charts ║Feedback  ║
-╚═══════════╩══════╩════════╩══════════╝
-```
+![Capture Tab](assets/screenshots/01-capture-tab.png)
 
 **Option A — Live Camera:**
 1. Tap **Live Camera** — the app requests camera permission on first use
@@ -209,35 +178,7 @@ Open the app. The **Capture** tab is active by default.
 
 The **Analyse** tab shows the video player with the SVG skeleton overlay.
 
-```
-╔══════════════════════════════════════╗
-║  Analyse Shot            Feedback ›  ║
-╠══════════════════════════════════════╣
-║ ┌────────────────────────────────┐   ║
-║ │                    Knee  142°  │   ║
-║ │      ◉  (nose)     Elbow  95° │   ║
-║ │     /|\ (shoulders/arms)       │   ║
-║ │      |  (torso)    Wt    58%  │   ║
-║ │     / \ (hips)                 │   ║
-║ │    /   \ (knees/ankles)        │   ║
-║ └────────────────────────────────┘   ║
-║                                      ║
-║  ┌──────────────────────────────┐    ║
-║  │  🤖  Analyse Shot            │    ║
-║  └──────────────────────────────┘    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │ ✅ Analysis Complete          │   ║
-║  │  Score  │  Shot   │ Frames   │   ║
-║  │  78/100 │  Drive  │   24     │   ║
-║  │                              │   ║
-║  │  View Coaching Feedback ›    │   ║
-║  ╰──────────────────────────────╯    ║
-╠═══════════╦══════╦════════╦══════════╣
-║  📹       ║  🎯● ║   📊   ║   💬    ║
-║ Capture   ║Analys║ Charts ║Feedback  ║
-╚═══════════╩══════╩════════╩══════════╝
-```
+![Analyse Tab](assets/screenshots/03-analyse-tab.png)
 
 **Steps:**
 1. The video loads automatically — use the native controls to preview it
@@ -267,43 +208,11 @@ The **Analyse** tab shows the video player with the SVG skeleton overlay.
 
 The **Charts** tab renders 6 native charts covering every dimension of technique.
 
-```
-╔══════════════════════════════════════╗
-║  Performance Charts                  ║
-╠══════════════════════════════════════╣
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │   ● Technique Radar          │    ║
-║  │                              │    ║
-║  │        Stance                │    ║
-║  │       /      \               │    ║
-║  │  Follow    Backlift          │    ║
-║  │      \      /                │    ║
-║  │       Balance                │    ║
-║  │  ── Ideal  ── Your score     │    ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │   ● Head Position            │    ║
-║  │    ╭──── Ideal 78% ────╮     │    ║
-║  │   ╱  Too High  Too Low  ╲    │    ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │   ● Knee Flexion (°)         │    ║
-║  │  180°│                       │    ║
-║  │  155°│ - - - ideal max       │    ║
-║  │  130°│ - - - ideal min       │    ║
-║  │      │   ╭──╮  ╭──╮          │   ║
-║  │   80°│───╯  ╰──╯  ╰──        │   ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  [ scroll for more charts ↓ ]        ║
-╠═══════════╦══════╦════════╦══════════╣
-║  📹       ║  🎯  ║   📊●  ║   💬    ║
-║ Capture   ║Analys║ Charts ║Feedback  ║
-╚═══════════╩══════╩════════╩══════════╝
-```
+![Technique Radar](assets/screenshots/04-charts-radar.png)
+
+![Line Charts](assets/screenshots/05-charts-linecharts.png)
+
+![Bar Chart](assets/screenshots/06-charts-barchart.png)
 
 Scroll down to see all 6 charts:
 
@@ -324,43 +233,9 @@ Tap any bar or line data point to see the exact value in a tooltip.
 
 The **Feedback** tab gives the overall score and detailed coaching notes.
 
-```
-╔══════════════════════════════════════╗
-║  Coaching Feedback       Charts ›    ║
-╠══════════════════════════════════════╣
-║  ╭──────────────────────────────╮    ║
-║  │   ╭──────╮  Overall Score    │    ║
-║  │   │  78  │  78 / 100         │    ║
-║  │   ╰──────╯                   │    ║
-║  │  Shot: Front Foot Drive      │    ║
-║  │  "Lead with the elbow and    │    ║
-║  │   play close to the body."   │    ║
-║  │                              │    ║
-║  │  ┌───────┬────────┬────────┐ │    ║
-║  │  │ 2.4s  │  24    │  92%   │ │    ║
-║  │  │ Dur.  │ Frames │  Acc.  │ │    ║
-║  │  └───────┴────────┴────────┘ │    ║
-║  ╰──────────────────────────────╯    ║
-║                                      ║
-║  [2 Strengths][1 Good][1 Improve][0] ║
-║                                      ║
-║  ╭──────────────────────────────╮    ║
-║  │ ★  Textbook Backlift         │    ║
-║  │    [ Excellent ]             │    ║
-║  │    Elbow 95° — high correct  │    ║
-║  │    backlift toward mid-on.   │    ║
-║  ╰──────────────────────────────╯    ║
-║  ╭──────────────────────────────╮    ║
-║  │ ⚠  Limited Hip Rotation      │    ║
-║  │    [ Needs Work ]            │    ║
-║  │    Drive hips toward bowler  │    ║
-║  │    to generate more power.   │    ║
-║  ╰──────────────────────────────╯    ║
-╠═══════════╦══════╦════════╦══════════╣
-║  📹       ║  🎯  ║   📊   ║   💬●   ║
-║ Capture   ║Analys║ Charts ║Feedback  ║
-╚═══════════╩══════╩════════╩══════════╝
-```
+![Score Ring](assets/screenshots/07-feedback-score.png)
+
+![Feedback Cards](assets/screenshots/08-feedback-cards.png)
 
 **Severity levels (sorted most critical first):**
 
@@ -375,25 +250,55 @@ The **Feedback** tab gives the overall score and detailed coaching notes.
 
 ## App Screens
 
-### Screen Flow
+> Screenshots below are captured from the reference web build at 390×844 px (iPhone 14 Pro viewport). The React Native app renders the same data with native components.
 
-```
-  ┌────────────┐     records/uploads      ┌────────────┐
-  │  Capture   │ ────────────────────────▶│  Analyse   │
-  │  Screen    │                          │  Screen    │
-  └────────────┘                          └─────┬──────┘
-                                                │ analysis complete
-                                                ▼
-                                         ┌────────────┐
-                                    ┌────│  Charts    │
-                                    │    │  Screen    │
-                                    │    └────────────┘
-                                    │
-                                    │    ┌────────────┐
-                                    └───▶│  Feedback  │
-                                         │  Screen    │
-                                         └────────────┘
-```
+### Capture Screen
+
+![Capture Tab](assets/screenshots/01-capture-tab.png)
+
+Choose between live camera recording or importing from the device photo library.
+
+### Capture Options
+
+![Capture Options](assets/screenshots/02-capture-options.png)
+
+Both capture cards visible — Live Camera (left) and Upload Video (right).
+
+### Analyse Screen — Skeleton Overlay
+
+![Analyse Tab](assets/screenshots/03-analyse-tab.png)
+
+The AI processes each frame and renders a colour-coded SVG pose skeleton over the video. Live metrics (knee angle, elbow angle, weight distribution) appear in the HUD overlay.
+
+### Charts Screen — Technique Radar
+
+![Technique Radar](assets/screenshots/04-charts-radar.png)
+
+A 6-axis radar chart comparing all technique dimensions to ideal coaching values. Rendered natively with react-native-svg.
+
+### Charts Screen — Line Charts
+
+![Line Charts](assets/screenshots/05-charts-linecharts.png)
+
+Time-series charts for Knee Flexion (top) and Weight Distribution (bottom) across the shot duration. Ideal coaching zones shown as shaded reference bands.
+
+### Charts Screen — Hip Rotation Bar Chart
+
+![Bar Chart](assets/screenshots/06-charts-barchart.png)
+
+Per-frame Hip Rotation bar chart. Green bars = within ideal 15–40° range.
+
+### Feedback Screen — Score Ring
+
+![Score Ring](assets/screenshots/07-feedback-score.png)
+
+The SVG score ring animates to the overall technique score (0–100). Shot type, session duration, frame count, and pose accuracy are displayed below.
+
+### Feedback Screen — Coaching Cards
+
+![Feedback Cards](assets/screenshots/08-feedback-cards.png)
+
+Severity-sorted coaching cards scroll below the score ring. Each card shows a badge (★ / ✓ / ⚠ / ✗), title, severity label, and a specific actionable coaching cue.
 
 ### Navigation
 
