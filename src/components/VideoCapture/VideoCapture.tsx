@@ -22,7 +22,11 @@ export function VideoCapture({ onVideoReady, onRecordingComplete }: VideoCapture
   const startWebcam = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 1280, height: 720, facingMode: 'environment' },
+        video: {
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: { ideal: 'environment' }, // soft constraint — works on laptops too
+        },
         audio: false,
       });
       streamRef.current = stream;

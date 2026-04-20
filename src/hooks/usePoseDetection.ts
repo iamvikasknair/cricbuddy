@@ -78,17 +78,27 @@ export function usePoseDetection(): UsePoseDetectionReturn {
 
   const initDetector = useCallback(async () => {
     if (detectorRef.current) return;
-    if (!window.tf || !window.poseDetection) {
-      // CDN scripts not loaded yet — retry once
-      await new Promise(r => setTimeout(r, 2000));
-      if (!window.tf || !window.poseDetection) {
-        setDetectorState('error');
-        return;
-      }
-    }
     setDetectorState('loading');
+
+    // Wait up to 8 s for CDN scripts to finish loading
+    for (let i = 0; i < 8; i++) {
+      if (window.tf && window.poseDetection) break;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
+    if (!window.tf || !window.poseDetection) {
+      console.warn('TF.js CDN scripts did not load — pose detection unavailable');
+      setDetectorState('error');
+      return;
+    }
+
     try {
-      await window.tf.setBackend('webgl');
+      // Prefer WebGL; fall back to CPU when GPU/WebGL is unavailable
+      try {
+        await window.tf.setBackend('webgl');
+      } catch {
+        await window.tf.setBackend('cpu');
+      }
       await window.tf.ready();
       detectorRef.current = await window.poseDetection.createDetector(
         window.poseDetection.SupportedModels.MoveNet,
