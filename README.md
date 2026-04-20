@@ -274,115 +274,61 @@ Feedback cards are sorted from most critical to most excellent so coaches can pr
 
 ## Application Snapshots
 
-### Dashboard — Capture Tab
-```
-╔═════════════════════════════════════════════════════════╗
-║  🏏 CricBuddy  ·  AI Cricket Coach                      ║
-╠══════════╦══════════╦══════════╦═════════════════════════╣
-║ ◉ Capture║  Analyse ║  Charts  ║  Feedback               ║
-╠═════════════════════════════════════════════════════════╣
-║                                                          ║
-║              Start Batting Analysis                      ║
-║         Record live or upload existing footage           ║
-║                                                          ║
-║    ╭──────────────────────╮  ╭──────────────────────╮    ║
-║    │  📷  Live Camera     │  │  📂  Upload Video    │    ║
-║    │                      │  │                      │    ║
-║    │  Record from webcam  │  │  MP4, WebM, MOV      │    ║
-║    ╰──────────────────────╯  ╰──────────────────────╯    ║
-║                                                          ║
-╚═════════════════════════════════════════════════════════╝
-```
+> All screenshots captured from a live build at 390×844 px (iPhone 14 Pro viewport, 2× retina) using demo session data.
 
-### Video Analyser with Skeleton Overlay
-```
-╔═════════════════════════════════════════════════════════╗
-║  Analyse                                 View Feedback › ║
-╠═════════════════════════════════════════════════════════╣
-║ ╭─────────────────────────────────────┬─────────────╮   ║
-║ │                                     │  Knee  142° │   ║
-║ │         ◉ (nose)                    │  Elbow  95° │   ║
-║ │        / \                          │  Wght  58%  │   ║
-║ │   (L◉)───(◉R) shoulders            ╰─────────────╯   ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) elbows                                  ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) wrists                                  ║
-║ │       |   |                                           ║
-║ │   (L◉)───(◉R) hips                                    ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) knees                                   ║
-║ │       |   |                                           ║
-║ │   (L◉)   (◉R) ankles                                  ║
-║ ╰─────────────────────────────────────────────────────╯ ║
-║  ▶ Play   ⏮ Restart                      🤖 Analyse    ║
-╚═════════════════════════════════════════════════════════╝
-```
+### Capture Tab
 
-### Performance Charts
-```
-╔═════════════════════════════════════════════════════════╗
-║  Performance Charts                                      ║
-╠═══════════════════════════╦═════════════════════════════╣
-║  Technique Radar          ║  Head Position              ║
-║                           ║                             ║
-║       Stance 100          ║       ╭────────╮            ║
-║      /        \           ║      ╱  Ideal  ╲            ║
-║  Timing  ──── Backlift    ║     │  78%  ●   │           ║
-║      \        /           ║      ╲    22%  ╱            ║
-║       Balance             ║       ╰────────╯            ║
-╠═══════════════════════════╬═════════════════════════════╣
-║  Knee Flexion (°)         ║  Weight Distribution (%)    ║
-║  180°│                    ║  100%│                       ║
-║  155°│- - - ideal max     ║   65%│ ─ ─ ─ ─ ─ ─ ─ ─     ║
-║      │  ╭──╮  ╭──╮       ║   50%│- - - balanced         ║
-║  130°│─ ╯  ╰──╯  ╰──     ║      │  ╭──╮  ╭──╮          ║
-║   80°│                    ║    0%│──╯  ╰──╯  ╰──        ║
-║      └─────────────────   ║      └──────────────────    ║
-╠═══════════════════════════╬═════════════════════════════╣
-║  Elbow Angle (°)          ║  Hip Rotation (°)           ║
-║  180°│                    ║   50°│                       ║
-║      │ ╭─╮  ╭─╮           ║   40°│ ▐▌  ▐▌  ▐▌  ▐▌      ║
-║   90°│─╯ ╰──╯ ╰──        ║   15°│  ▌    ▌    ▌          ║
-║    0°│                    ║    0°│───────────────────    ║
-║      └─────────────────   ║      └──────────────────    ║
-╚═════════════════════════════════════════════════════════╝
-```
+![Capture Tab](assets/screenshots/01-capture-tab.png)
 
-### Coaching Feedback Panel
-```
-╔═════════════════════════════════════════════════════════╗
-║  Coaching Feedback                       View Charts  › ║
-╠═════════════════════════════════════════════════════════╣
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ╭──────╮  Overall Technique Score              │   ║
-║  │  │  78  │  78 / 100                             │   ║
-║  │  ╰──────╯  Shot: Front Foot Drive               │   ║
-║  │            "Focus on leading with elbow…"       │   ║
-║  │                                                  │   ║
-║  │  Duration: 2.4s  │  Frames: 24  │  Accuracy 92% │   ║
-║  │  Avg Knee: 142°  │  Avg Fwd Wt: 58%             │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║                                                          ║
-║  [ 2 Strengths ]  [ 1 Good ]  [ 1 Needs Work ]  [ 0 ]  ║
-║                                                          ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ★  Textbook Backlift            [ Excellent ]  │   ║
-║  │     Elbow angle 95° — high correct backlift     │   ║
-║  │     towards mid-on / second slip.               │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ✓  Great Head Position              [ Good ]   │   ║
-║  │     Head stays over the ball, eyes level —      │   ║
-║  │     a hallmark of elite batsmen.                │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-║  ╭─────────────────────────────────────────────────╮   ║
-║  │  ⚠  Limited Hip Rotation        [ Needs Work ]  │   ║
-║  │     Hips not rotating enough through the shot.  │   ║
-║  │     Drive hips toward bowler to generate power. │   ║
-║  ╰─────────────────────────────────────────────────╯   ║
-╚═════════════════════════════════════════════════════════╝
-```
+The landing screen lets you choose between live webcam recording or uploading an existing video file.
+
+### Capture Options
+
+![Capture Options](assets/screenshots/02-capture-options.png)
+
+Both capture cards visible simultaneously — Live Camera (left) and Upload Video (right).
+
+### Analyse Tab — Skeleton Overlay
+
+![Analyse Tab](assets/screenshots/03-analyse-tab.png)
+
+The AI processes each frame and renders a colour-coded pose skeleton directly over the video. Live biomechanical metrics (knee angle, elbow angle, weight distribution) update as you scrub the timeline.
+
+### Charts Tab — Technique Radar
+
+![Technique Radar](assets/screenshots/04-charts-radar.png)
+
+A 7-axis radar chart compares all technique dimensions against ideal reference values. Green fill = strong, smaller area = needs attention.
+
+### Charts Tab — Line Charts
+
+![Line Charts](assets/screenshots/05-charts-linecharts.png)
+
+Time-series line charts for Knee Flexion and Weight Distribution over the shot duration. Horizontal reference bands mark the ideal coaching zones.
+
+### Charts Tab — Bar Chart
+
+![Bar Chart](assets/screenshots/06-charts-barchart.png)
+
+Hip Rotation bar chart (bottom of the Charts tab). Green bars indicate rotation within the ideal 15–40° coaching range.
+
+### Feedback Tab — Score Ring
+
+![Score Ring](assets/screenshots/07-feedback-score.png)
+
+The animated score ring shows the overall technique score out of 100, shot type detection result, and session stats (duration, frames processed, pose accuracy).
+
+### Feedback Tab — Coaching Cards
+
+![Feedback Cards](assets/screenshots/08-feedback-cards.png)
+
+Severity-sorted coaching cards: ★ Excellent (green) → ✓ Good (blue) → ⚠ Needs Work (yellow) → ✗ Critical (red). Each card provides a specific, actionable coaching cue.
+
+### App Header
+
+![App Header](assets/screenshots/09-header.png)
+
+The sticky header shows the app identity and a live score indicator dot (green ≥ 80, gold ≥ 60, red < 60) that updates after every analysis.
 
 ---
 
@@ -422,7 +368,8 @@ cricbuddy/
 │   ├── types/
 │   │   └── index.ts                  # Shared TypeScript types
 │   ├── utils/
-│   │   └── poseUtils.ts              # Angle calc, frame analysis, feedback engine
+│   │   ├── poseUtils.ts              # Angle calc, frame analysis, feedback engine
+│   │   └── simulation.ts             # Demo session generator (30-frame batting pose)
 │   ├── hooks/
 │   │   └── usePoseDetection.ts       # TF.js MoveNet hook + skeleton draw
 │   └── components/

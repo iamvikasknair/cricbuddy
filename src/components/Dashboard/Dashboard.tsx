@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Activity, ChevronRight, Target, TrendingUp, BarChart2 } from 'lucide-react';
 import { VideoCapture } from '../VideoCapture/VideoCapture';
 import { VideoAnalyser } from '../PoseAnalysis/VideoAnalyser';
@@ -12,6 +12,8 @@ import {
   HipRotationBar,
 } from '../Charts/AnalyticsCharts';
 import type { SessionAnalysis } from '../../types';
+import { generateFeedback, computeOverallScore, detectShotType } from '../../utils/poseUtils';
+import { simulateSession } from '../../utils/simulation';
 
 type Tab = 'capture' | 'analyse' | 'charts' | 'feedback';
 
@@ -22,10 +24,32 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: 'feedback', label: 'Feedback', icon: TrendingUp },
 ];
 
+function buildDemoSession(): SessionAnalysis {
+  const frames = simulateSession(30, 3.0);
+  return {
+    sessionId: 'demo_session',
+    startTime: Date.now(),
+    duration: 3.0,
+    frames,
+    shotType: detectShotType(frames),
+    overallScore: computeOverallScore(frames),
+    feedback: generateFeedback(frames),
+  };
+}
+
 export function Dashboard() {
-  const [activeTab, setActiveTab] = useState<Tab>('capture');
-  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const params = new URLSearchParams(window.location.search);
+  const demoMode = params.get('demo') === '1';
+  const demoTab = (params.get('tab') as Tab) ?? 'capture';
+
+  const [activeTab, setActiveTab] = useState<Tab>(demoMode ? demoTab : 'capture');
+  const [videoSrc, setVideoSrc] = useState<string | null>(demoMode ? 'demo' : null);
   const [session, setSession] = useState<SessionAnalysis | null>(null);
+
+  useEffect(() => {
+    if (demoMode) setSession(buildDemoSession());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleVideoReady = useCallback((src: string) => {
     setVideoSrc(src);
